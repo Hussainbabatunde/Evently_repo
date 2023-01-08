@@ -1,16 +1,28 @@
 import React, {useEffect, useState} from "react";
 import Icon  from 'react-native-vector-icons/FontAwesome';
 import { ActivityIndicator, Button, Image, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import logo from "../assets/google.png";
 import { useDispatch, useSelector } from "react-redux";
 import  DateTimePicker from "@react-native-community/datetimepicker";
-import { CreateEventReq } from "../state/CreateE/createEvent";
+import { CreateEventReq, UpdateEventReq } from "../../state/CreateE/createEvent";
 import { SelectList } from "react-native-dropdown-select-list";
 import moment from "moment";
 
+import { Ionicons } from '@expo/vector-icons'; 
 
 
-const CreateEvent=({navigation})=>{
+
+const UpdateEvent=({navigation, route})=>{
+    const [id] = useState(route.params);
+    console.warn("the id passed ", id)
+    const dispatch= useDispatch()
+
+    useEffect(()=>{
+        const getEvent= async()=>{
+            await dispatch(UpdateEventReq(id))
+        }
+        getEvent();
+    },[])
+
 
     const [secure2, setSecure2] = useState(true);
     const [agree, setAgree] = useState(false)
@@ -64,9 +76,13 @@ const CreateEvent=({navigation})=>{
   const showTimepicker = () => {
     showMode('time');
   };
+
+  const showTrending = ()=>{
+    navigation.navigate("DrawerNavigation", {screen : "Events"})
+}
     
   
-  const dispatch= useDispatch()
+  
 
     const handleSignup= async()=>{
         const start_date= moment(startdate).utc().format('YYYY-MM-DD')
@@ -130,7 +146,10 @@ const CreateEvent=({navigation})=>{
     return(
         <KeyboardAvoidingView  behavior={Platform.OS === "ios"? "padding" :""} style={styles.Wholeview}>
             <ScrollView showsVerticalScrollIndicator={false} style={{width: "90%"}}>
-            <Text style={styles.signin}>Create Event</Text>
+            <SafeAreaView style={styles.headertrend}>
+            <Ionicons name="arrow-back-outline" size={35} color="black" onPress={showTrending} />
+            <Text style={styles.trendText}>Update Events</Text>
+            </SafeAreaView>
             <TextInput placeholder="Title" value={title} onChangeText={setTitle} style={styles.emailinput} />
             <TextInput placeholder="Description" value={description} onChangeText={setDescription} style={styles.emailinput} />
             {/* <TextInput placeholder="Location" value={location} onChangeText={setLocation} style={styles.emailinput} />
@@ -251,6 +270,10 @@ const styles= StyleSheet.create({
         marginTop: 20,
         width:"80%"
     },
+    trendText:{
+        fontSize: 25,
+        marginTop: 5,
+    },
     logocomp:{
         width: 50,
         height: 50
@@ -280,6 +303,11 @@ const styles= StyleSheet.create({
         borderRadius: 10,
         marginTop: 20,
         fontSize: 18
+    },
+    headertrend:{
+        flexDirection:"row",
+        marginLeft: "2.5%",
+        width:"95%"
     },
     emailinputhold:{
         width:"100%",
@@ -349,4 +377,4 @@ const styles= StyleSheet.create({
     }
 })
 
-export default CreateEvent;
+export default UpdateEvent;

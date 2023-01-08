@@ -24,12 +24,15 @@ export const GetTrending= createAsyncThunk(
           return await instance
             .get("events")
             .then( async (response) => {
-              console.warn("register new", response.data.data);
               
               
               return response.data;
             })
-      .catch(err => console.log(err))
+      .catch((err) => {
+        let errdata= err.response.data;
+        // console.log(errdata.message);
+        return rejectWithValue(errdata)
+      })
         
     }
 )
@@ -58,7 +61,7 @@ export const GetTrendingSlice = createSlice({
         state.isSuccess = true;
         state.user = true;
         state.data= action.payload;
-        console.warn("data stored ",action.payload);
+        // console.warn("data stored ",action.payload);
       })
       .addCase(GetTrending.rejected, (state, action) => {
         state.isLoading = false;

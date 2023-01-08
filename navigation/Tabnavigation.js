@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import TrendingEvent from "../screens/TrendingEvent";
 import EventDetails from "../screens/EventDetails";
 import CreateEvent from "../screens/CreateEvent";
+import { DrawerNavigation, Sidebar } from "./DrawerNavigation";
 
 
 const Stack= createNativeStackNavigator();
@@ -33,9 +34,9 @@ export function TabNavigation() {
            }}
           />
           <Tab.Screen
-            name="CreateEvent"
-            component={CreateEvent}
-            options={{ title: 'CreateEvent', tabBarActiveTintColor: 'rgba(72, 130, 101, 0.5)',  headerShown: false, tabBarIcon: ({focused}) => {
+            name="DrawerNavigation"
+            component={Sidebar}
+            options={{ title: 'DrawerNavigation', tabBarActiveTintColor: 'rgba(72, 130, 101, 0.5)',  headerShown: false, tabBarIcon: ({focused}) => {
               return <Ionicons name="ios-create" size={30} color={focused ? "rgb(116,131,237)" : "black"} />
               },
            }}

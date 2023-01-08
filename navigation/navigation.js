@@ -12,6 +12,7 @@ import TrendingEvent from "../screens/TrendingEvent";
 import EventDetails from "../screens/EventDetails";
 import CreateEvent from "../screens/CreateEvent";
 import { TabNavigation } from "./Tabnavigation";
+import UpdateEvent from "../screens/Host/UpdateEvent";
 
 
 const Stack= createNativeStackNavigator();
@@ -52,6 +53,12 @@ const Navigation= ()=>{
       component={EventDetails}
       options={{ title: 'Trending Event',  headerShown: false }}
     />
+    <Stack.Screen
+      name="UpdateEvent"
+      component={UpdateEvent}
+      options={{ title: 'Update Event',  headerShown: false }}
+    />
+    
     {/* 
             
             

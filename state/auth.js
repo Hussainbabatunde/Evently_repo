@@ -35,7 +35,7 @@ const initialState= {
 export const LoginAuth = createAsyncThunk(
     "authlogin/login",
     async (details, { rejectWithValue }) => {
-      console.warn(details)
+      // console.warn(details)
       const instance = axios.create({
         baseURL: "http://evently.raddotech.com/api/",
         timeout: 20000,
@@ -48,18 +48,17 @@ export const LoginAuth = createAsyncThunk(
       return await instance
         .post("login", details)
         .then( async (response) => {
-          console.warn("register", response.data.token);
+          // console.warn("register", response.data.token);
           await AsyncStorage.setItem("token", response.data.token)
          
           return response.data;
         })
-        // .catch((error) => {
-        //   if (error.message === "Network Error") {
-        //     return rejectWithValue(error.response);
-        //   } else {
-        //     return rejectWithValue(error.response);
-        //   }
-        // });
+        .catch((error) => {
+          let errdata = error.response.data
+        // console.log(errdata.message)
+        Alert.alert(errdata.message)
+        return rejectWithValue(errdata)
+        });
     }
   );
 
@@ -80,16 +79,14 @@ export const LoginAuth = createAsyncThunk(
       return await instance
         .post("signup", details)
         .then((response) => {
-          console.warn("register", response.data);
+          // console.warn("register", response.data);
           return response.data;
         })
-        // .catch((error) => {
-        //   if (error.message === "Network Error") {
-        //     return rejectWithValue(error.response);
-        //   } else {
-        //     return rejectWithValue(error.response);
-        //   }
-        // });
+        .catch((error) => {
+          let errdata = error.response.data
+        // console.log(errdata.message)
+        return rejectWithValue(errdata)
+        });
     }
   );
 
@@ -109,14 +106,14 @@ export const LoginAuth = createAsyncThunk(
       return await instance
         .get("products")
         .then((response) => {
-          console.log("products gotten ", response.data);
+          // console.log("products gotten ", response.data);
           return response.data;
         })
-        // .catch((error) => {
-        //   if (error.message === "Request failed with status code 422") {
-        //     console.warn("Request failed with status code 422")
-        //   }
-        // });
+        .catch((error) => {
+          let errdata = error.response.data
+        // console.log(errdata.message)
+        return rejectWithValue(errdata)
+        });
     }
   );
 
@@ -131,27 +128,24 @@ const authSlice = createSlice({
         state.isLoadingUsers = true;
     })
     .addCase(LoginAuth.fulfilled, (state, action)=>{
-        console.warn("login response ", action)
+        // console.warn("login response ", action)
         state.isLoadingUsers= false;
         state.authtoken= action.payload.token;
         state.success = true;
         state.error= false;
-        console.warn(state)
+        // console.warn(state)
 
     })
     .addCase(LoginAuth.rejected, (state, action)=>{
         state.error= true;
         state.isLoadingUsers= false;
         state.message= action.payload;
-        console.log("response",action)
-        if (action.error.message === "Request failed with status code 422") {
-          Alert.alert("Incorrect details")}
     })
     .addCase(SignupAuth.pending, (state)=>{
         state.isLoadingUsers = true;
     })
     .addCase(SignupAuth.fulfilled, (state, action)=>{
-        console.warn("register response ", action.payload)
+        // console.warn("register response ", action.payload)
         state.isLoadingUsers= false;
         state.register= action.payload;
         state.registersuccess = true;
@@ -164,7 +158,7 @@ const authSlice = createSlice({
         state.registererror= true;
         state.isLoadingUsers= false;
         state.message= action.payload;
-        console.log("response",action)
+        // console.log("response",action)
         // if (action.error.message === "Request failed with status code 422") {
         //   Alert.alert("Incorrect details")}
     })
@@ -172,7 +166,7 @@ const authSlice = createSlice({
       state.isLoadingUsers = true;
     })
     .addCase(ProductsDetaiis.fulfilled, (state, action)=>{
-      console.warn("product response ", action.payload)
+      // console.warn("product response ", action.payload)
       state.isLoadingUsers= true;
       state.products= action.payload;
 
