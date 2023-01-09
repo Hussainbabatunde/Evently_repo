@@ -6,22 +6,36 @@ import  DateTimePicker from "@react-native-community/datetimepicker";
 import { CreateEventReq, UpdateEventReq } from "../../state/CreateE/createEvent";
 import { SelectList } from "react-native-dropdown-select-list";
 import moment from "moment";
-
 import { Ionicons } from '@expo/vector-icons'; 
 
 
 
 const UpdateEvent=({navigation, route})=>{
-    const [id] = useState(route.params);
-    console.warn("the id passed ", id)
+    // const [id] = useState(route.params);
+    // console.warn("the id passed ", id)
     const dispatch= useDispatch()
 
+    const gottenData = useSelector((state)=> state.createEventReducer?.getdata?.data);
+    console.log("data shown ", gottenData)
+
     useEffect(()=>{
-        const getEvent= async()=>{
-            await dispatch(UpdateEventReq(id))
+        setAddress(gottenData.address)
+        setDescription(gottenData.description)
+        setEventCategory(gottenData.event_category)
+        setEventtype(gottenData.event_type)
+        setStartdate(gottenData.start_date)
+        if(gottenData.free==="1"){
+            setFree(true)
+        }else{
+            setFree(false)
         }
-        getEvent();
-    },[])
+        setLocation(gottenData.location)
+        setPrivacy(gottenData.privacy)
+        setStatus(gottenData.status)
+        setTitle(gottenData.title)
+    },[gottenData.address, gottenData.description, gottenData.event_category, gottenData.event_type,
+    gottenData.free, gottenData.location, gottenData.privacy, gottenData.status, gottenData.title,
+    gottenData.start_date])
 
 
     const [secure2, setSecure2] = useState(true);
@@ -101,10 +115,10 @@ const UpdateEvent=({navigation, route})=>{
             event_category: event_category
         }
 
-        console.warn(free)
-        setLoading(true)
-        await dispatch(CreateEventReq(details))
-        setLoading(false)
+        console.warn(details)
+        // setLoading(true)
+        // await dispatch(CreateEventReq(details))
+        // setLoading(false)
         // navigation.navigate("Dashboard", {screen : "Eventhome"})
     }
 
@@ -158,8 +172,9 @@ const UpdateEvent=({navigation, route})=>{
                     setSelected={(val) => setLocation(val)} 
                     data={data2}
                     save="value"
-                    boxStyles={{backgroundColor: "none", borderWidth: "1px", borderColor:"rgb(213,213,213)", marginTop:20}}
+                    boxStyles={{backgroundColor: "none", borderWidth: 1, borderColor:"rgb(213,213,213)", marginTop:20}}
                     placeholder="Select Location"
+                    defaultOption={{  key:'1', value:gottenData.location }}
                         />
             <TextInput placeholder="Address" value={address} onChangeText={setAddress} style={styles.emailinput} />
             <View style={styles.emailinputhold}>
@@ -209,10 +224,10 @@ const UpdateEvent=({navigation, route})=>{
     }}>
                 <Text style={{fontSize: 17, color:"rgb(213,213,213)"}}>Free entry:</Text>
                 <TouchableOpacity style={{backgroundColor: free? "blue":"transparent", borderRadius: 5}}>
-                    <Button title="True" onPress={()=>{setFree(true)}}/>
+                    <Button title="True" color={ free? "white":"black"} onPress={()=>{setFree(true)}}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={{backgroundColor: free? "transparent":"red", borderRadius: 5}}>
-                    <Button title="False" onPress={()=>{setFree(false)}}/>
+                    <Button title="False" color={ free? "black":"red"} onPress={()=>{setFree(false)}}/>
                 </TouchableOpacity>
             </View>
             
@@ -221,37 +236,41 @@ const UpdateEvent=({navigation, route})=>{
                     setSelected={(val) => setPrivacy(val)} 
                     data={data}
                     save="value"
-                    boxStyles={{backgroundColor: "none", borderWidth: "1px", borderColor:"rgb(213,213,213)", marginTop:20}}
+                    boxStyles={{backgroundColor: "none", borderWidth: 1, borderColor:"rgb(213,213,213)", marginTop:20}}
                     placeholder="Select Privacy"
+                    defaultOption={{  key:'1', value:gottenData.privacy }}
                         />
             {/* <TextInput placeholder="Status" value={status} onChangeText={setStatus} style={styles.emailinput} /> */}
             <SelectList 
                     setSelected={(val) => setStatus(val)} 
                     data={data4}
                     save="value"
-                    boxStyles={{backgroundColor: "none", borderWidth: "1px", borderColor:"rgb(213,213,213)", marginTop:20}}
+                    boxStyles={{backgroundColor: "none", borderWidth: 1, borderColor:"rgb(213,213,213)", marginTop:20}}
                     placeholder="Select Status"
+                    defaultOption={{  key:'1', value:gottenData.status }}
                         />
             {/* <TextInput placeholder="Event Type" value={event_type} onChangeText={setEventtype} style={styles.emailinput} /> */}
             <SelectList 
                     setSelected={(val) => setEventtype(val)} 
                     data={data5}
                     save="value"
-                    boxStyles={{backgroundColor: "none", borderWidth: "1px", borderColor:"rgb(213,213,213)", marginTop:20}}
+                    boxStyles={{backgroundColor: "none", borderWidth: 1, borderColor:"rgb(213,213,213)", marginTop:20}}
                     placeholder="Select Event Type"
+                    defaultOption={{  key:'1', value:gottenData.event_type }}
                         />
             {/* <TextInput placeholder="Event Category" value={event_category} onChangeText={setEventCategory} style={styles.emailinput} /> */}
             <SelectList 
                     setSelected={(val) => setEventCategory(val)} 
                     data={data3}
                     save="value"
-                    boxStyles={{backgroundColor: "none", borderWidth: "1px", borderColor:"rgb(213,213,213)", marginTop:20}}
+                    boxStyles={{backgroundColor: "none", borderWidth: 1, borderColor:"rgb(213,213,213)", marginTop:20}}
                     placeholder="Select Category Type"
+                    defaultOption={{  key:'1', value:gottenData.event_category }}
                         />
             <TouchableOpacity style={styles.siginbigbut} onPress={handleSignup}>
                     {loading? <ActivityIndicator animating={true} color="white"/>
                     :
-                        <Text style={styles.signinword} onPress={handleSignup}>Create Event</Text>}
+                        <Text style={styles.signinword} onPress={handleSignup}>Update Event</Text>}
                     </TouchableOpacity>
             </ScrollView>
         </KeyboardAvoidingView>

@@ -139,7 +139,7 @@ const CreateEvent=({navigation})=>{
                     setSelected={(val) => setLocation(val)} 
                     data={data2}
                     save="value"
-                    boxStyles={{backgroundColor: "none", borderWidth: "1px", borderColor:"rgb(213,213,213)", marginTop:20}}
+                    boxStyles={{backgroundColor: "none", borderWidth: 1, borderColor:"rgb(213,213,213)", marginTop:20}}
                     placeholder="Select Location"
                         />
             <TextInput placeholder="Address" value={address} onChangeText={setAddress} style={styles.emailinput} />
@@ -202,7 +202,7 @@ const CreateEvent=({navigation})=>{
                     setSelected={(val) => setPrivacy(val)} 
                     data={data}
                     save="value"
-                    boxStyles={{backgroundColor: "none", borderWidth: "1px", borderColor:"rgb(213,213,213)", marginTop:20}}
+                    boxStyles={{backgroundColor: "none", borderWidth: 1, borderColor:"rgb(213,213,213)", marginTop:20}}
                     placeholder="Select Privacy"
                         />
             {/* <TextInput placeholder="Status" value={status} onChangeText={setStatus} style={styles.emailinput} /> */}
@@ -210,7 +210,7 @@ const CreateEvent=({navigation})=>{
                     setSelected={(val) => setStatus(val)} 
                     data={data4}
                     save="value"
-                    boxStyles={{backgroundColor: "none", borderWidth: "1px", borderColor:"rgb(213,213,213)", marginTop:20}}
+                    boxStyles={{backgroundColor: "none", borderWidth: 1, borderColor:"rgb(213,213,213)", marginTop:20}}
                     placeholder="Select Status"
                         />
             {/* <TextInput placeholder="Event Type" value={event_type} onChangeText={setEventtype} style={styles.emailinput} /> */}
@@ -218,7 +218,7 @@ const CreateEvent=({navigation})=>{
                     setSelected={(val) => setEventtype(val)} 
                     data={data5}
                     save="value"
-                    boxStyles={{backgroundColor: "none", borderWidth: "1px", borderColor:"rgb(213,213,213)", marginTop:20}}
+                    boxStyles={{backgroundColor: "none", borderWidth: 1, borderColor:"rgb(213,213,213)", marginTop:20}}
                     placeholder="Select Event Type"
                         />
             {/* <TextInput placeholder="Event Category" value={event_category} onChangeText={setEventCategory} style={styles.emailinput} /> */}
@@ -226,7 +226,7 @@ const CreateEvent=({navigation})=>{
                     setSelected={(val) => setEventCategory(val)} 
                     data={data3}
                     save="value"
-                    boxStyles={{backgroundColor: "none", borderWidth: "1px", borderColor:"rgb(213,213,213)", marginTop:20}}
+                    boxStyles={{backgroundColor: "none", borderWidth: 1, borderColor:"rgb(213,213,213)", marginTop:20}}
                     placeholder="Select Category Type"
                         />
             <TouchableOpacity style={styles.siginbigbut} onPress={handleSignup}>

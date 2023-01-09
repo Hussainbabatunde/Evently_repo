@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetTrending } from "../../state/getTrending";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons'; 
+import { UpdateEventReq } from "../../state/CreateE/createEvent";
 
 const GetCreateEvent= ({navigation})=>{
 
@@ -62,8 +63,10 @@ const GetCreateEvent= ({navigation})=>{
                     <Text style={styles.going_nummber}>65 + going</Text>
                 </View>
                 <View style={styles.redheart}>
-                <Entypo name="edit" size={24} color="blue" style={{marginRight: 20}} onPress={()=>{
-        navigation.navigate("UpdateEvent", item?.id)
+                <Entypo name="edit" size={24} color="blue" style={{marginRight: 20}} onPress={async ()=>{
+        // navigation.navigate("UpdateEvent", item?.id)
+        await dispatch(UpdateEventReq(item?.id))
+        navigation.navigate("UpdateEvent")
     }} />
                     <MaterialIcons name="delete" size={24} color="red"  />
                     </View>
